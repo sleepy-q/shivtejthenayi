@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#0a0a0a"/>
+  <meta name="description" content="Shivtej Thenayi — Videographer & Creative Editor crafting cinematic ads for cafes and restaurants."/>
+  <title>Shivtej Thenayi — Videographer & Creative Editor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f0eb;
+      --accent: #e85c2e;
+      --accent2: #f2b950;
+      --gray: #1c1c1c;
+      --muted: #6b6560;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      background: var(--black); color: var(--white);
+      font-family: var(--font-body); font-weight: 300;
+      overflow-x: hidden; -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: calc(16px + var(--safe-top)) 20px 16px;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.96), transparent);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    }
+    .nav-logo {
+      display: flex; flex-direction: column; line-height: 1;
+      text-decoration: none;
+    }
+    .nav-logo-first {
+      font-family: var(--font-display); font-size: 18px;
+      letter-spacing: 4px; color: var(--white);
+    }
+    .nav-logo-last {
+      font-family: var(--font-display); font-size: 18px;
+      letter-spacing: 4px; color: var(--accent);
+    }
+    .hamburger {
+      display: flex; flex-direction: column; gap: 5px;
+      background: none; border: none; padding: 8px; cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 1.5px; background: var(--white);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .mobile-menu {
+      position: fixed; inset: 0; z-index: 190;
+      background: var(--black);
+      display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+      padding: 0 40px;
+      gap: 4px; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .mobile-menu.open { opacity: 1; pointer-events: all; }
+    .mobile-menu a {
+      font-family: var(--font-display); font-size: 64px;
+      letter-spacing: 2px; color: var(--white);
+      text-decoration: none; padding: 6px 0;
+      -webkit-tap-highlight-color: transparent;
+      transition: color 0.2s, letter-spacing 0.2s;
+    }
+    .mobile-menu a:active { color: var(--accent); }
+    .mobile-menu-footer {
+      position: absolute; bottom: calc(40px + var(--safe-bottom)); left: 40px; right: 40px;
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .mobile-menu-handle {
+      font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted);
+    }
+    .mobile-menu-label {
+      font-family: var(--font-display); font-size: 11px;
+      letter-spacing: 3px; color: var(--accent);
+    }
+    .nav-links { display: none; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 20px calc(56px + var(--safe-bottom));
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, #0a0a0a 30%, #180e05 100%);
+    }
+    .hero-grain {
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+      opacity: 0.5; pointer-events: none;
+    }
+    .hero-line-v {
+      position: absolute; top: 0; right: 64px;
+      width: 1px; height: 100%;
+      background: linear-gradient(to bottom, transparent 5%, var(--accent) 45%, transparent 95%);
+      opacity: 0.18;
+    }
+    .hero-scroll-hint {
+      position: absolute; bottom: calc(28px + var(--safe-bottom)); right: 20px;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      animation: fadeUp 1s ease 1.2s both;
+    }
+    .hero-scroll-hint span {
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--muted); writing-mode: vertical-rl;
+    }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+      animation: scrollPulse 2s ease infinite;
+    }
+
+    .hero-eyebrow {
+      font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 14px; position: relative;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 17vw, 108px);
+      line-height: 0.88; letter-spacing: 1px;
+      position: relative; animation: fadeUp 0.8s ease 0.35s both;
+    }
+    .hero-name .first { color: var(--white); }
+    .hero-name .last {
+      -webkit-text-stroke: 1.5px var(--accent);
+      color: transparent; display: block;
+    }
+    .hero-role {
+      margin-top: 20px; position: relative;
+      animation: fadeUp 0.8s ease 0.5s both;
+    }
+    .hero-role-text {
+      font-size: 13px; font-weight: 400; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .hero-role-text em { color: var(--white); font-style: normal; }
+    .hero-sub {
+      margin-top: 16px; font-size: 14px; font-weight: 300;
+      color: var(--muted); line-height: 1.75; max-width: 360px;
+      position: relative; animation: fadeUp 0.8s ease 0.62s both;
+    }
+    .hero-cta {
+      margin-top: 36px; display: flex; flex-direction: column; gap: 14px;
+      position: relative; animation: fadeUp 0.8s ease 0.75s both;
+    }
+    .btn-primary {
+      background: var(--accent); color: var(--black);
+      padding: 18px 32px; font-family: var(--font-body);
+      font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase;
+      text-decoration: none; border: none; display: block; text-align: center;
+      -webkit-tap-highlight-color: transparent; transition: background 0.2s;
+    }
+    .btn-primary:active { background: var(--accent2); }
+    .btn-outline {
+      border: 1px solid rgba(245,240,235,0.2); color: var(--white);
+      padding: 17px 32px; font-family: var(--font-body);
+      font-size: 11px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase;
+      text-decoration: none; display: block; text-align: center;
+      -webkit-tap-highlight-color: transparent; transition: border-color 0.2s;
+    }
+    .btn-outline:active { border-color: var(--accent); color: var(--accent); }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap { overflow: hidden; background: var(--accent); padding: 11px 0; }
+    .marquee-track { display: flex; animation: marquee 16s linear infinite; white-space: nowrap; }
+    .marquee-item {
+      font-family: var(--font-display); font-size: 13px;
+      letter-spacing: 3px; color: var(--black); padding: 0 28px; flex-shrink: 0;
+    }
+
+    /* ── SHARED ── */
+    section { padding: 72px 20px; }
+    .section-label {
+      font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(44px, 12vw, 70px); line-height: 0.93; letter-spacing: 1px;
+    }
+
+    /* ── PORTFOLIO ── */
+    #portfolio { background: var(--black); padding-bottom: 56px; }
+    .portfolio-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 28px;
+    }
+    .portfolio-count {
+      font-family: var(--font-display); font-size: 52px; color: #1e1e1e; line-height: 1;
+      user-select: none;
+    }
+    .video-reel { display: flex; flex-direction: column; gap: 4px; }
+
+    .video-card {
+      position: relative; overflow: hidden; background: var(--gray); border-radius: 2px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .video-card video {
+      width: 100%; display: block; aspect-ratio: 9/16; object-fit: cover; background: #111;
+    }
+    .video-info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 80%);
+      padding: 40px 16px 18px;
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .video-num {
+      font-family: var(--font-display); font-size: 11px;
+      letter-spacing: 3px; color: rgba(255,255,255,0.3); margin-bottom: 6px;
+    }
+    .video-client {
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 4px;
+    }
+    .video-title { font-family: var(--font-display); font-size: 24px; letter-spacing: 1px; line-height: 1; }
+    .video-tap-btn {
+      width: 50px; height: 50px; border: 1.5px solid rgba(255,255,255,0.5);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.3); flex-shrink: 0;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .video-card.playing .video-tap-btn { border-color: var(--accent); background: rgba(232,92,46,0.15); }
+    .play-icon {
+      width: 0; height: 0;
+      border-top: 8px solid transparent; border-bottom: 8px solid transparent;
+      border-left: 14px solid white; margin-left: 3px;
+    }
+    .pause-icon { display: none; gap: 4px; align-items: center; }
+    .pause-icon span { display: block; width: 3px; height: 14px; background: white; border-radius: 1px; }
+    .video-card.playing .play-icon { display: none; }
+    .video-card.playing .pause-icon { display: flex; }
+
+    /* ── ABOUT ── */
+    #about { background: var(--gray); }
+    .about-visual { position: relative; margin-bottom: 56px; }
+    .about-img-wrap {
+      aspect-ratio: 4/5; width: 100%; max-width: 340px; overflow: hidden;
+    }
+    .about-img-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #151515, #241508);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 10px;
+      letter-spacing: 3px; color: var(--muted); text-align: center; line-height: 2;
+    }
+    .about-frame-deco {
+      position: absolute; top: -12px; left: 12px;
+      width: calc(100% - 12px); height: calc(100% - 12px);
+      max-width: 340px;
+      border: 1px solid rgba(232, 92, 46, 0.4); pointer-events: none; z-index: 0;
+    }
+    .about-img-wrap { position: relative; z-index: 1; }
+    .about-tag {
+      position: absolute; bottom: -16px; right: 0;
+      background: var(--accent); color: var(--black);
+      padding: 10px 18px;
+      font-family: var(--font-display); font-size: 13px; letter-spacing: 3px;
+    }
+
+    .about-content .section-title { margin-bottom: 20px; }
+    .about-intro {
+      font-size: 18px; font-weight: 400; line-height: 1.6;
+      color: var(--white); margin-bottom: 16px;
+    }
+    .about-bio { font-size: 14px; line-height: 1.85; color: #9a918a; margin-bottom: 14px; }
+    .about-skills {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;
+    }
+    .skill-tag {
+      border: 1px solid #2e2e2e; padding: 7px 14px;
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
+    }
+    .about-stats {
+      display: flex; margin-top: 36px; padding-top: 32px; border-top: 1px solid #252525;
+    }
+    .stat { flex: 1; text-align: center; padding: 0 4px; }
+    .stat:not(:last-child) { border-right: 1px solid #252525; }
+    .stat-num { font-family: var(--font-display); font-size: 38px; color: var(--accent2); line-height: 1; }
+    .stat-label { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--black); }
+    .contact-info { margin-bottom: 48px; }
+    .contact-tagline {
+      font-size: 15px; font-style: italic; font-weight: 300;
+      color: var(--muted); margin: 16px 0 32px; line-height: 1.7;
+    }
+    .contact-links { display: flex; flex-direction: column; gap: 0; }
+    .contact-link-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 0; border-bottom: 1px solid #1e1e1e;
+      text-decoration: none; color: var(--white);
+      -webkit-tap-highlight-color: transparent;
+      transition: color 0.2s;
+    }
+    .contact-link-row:first-child { border-top: 1px solid #1e1e1e; }
+    .contact-link-row:active { color: var(--accent); }
+    .contact-link-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 3px; }
+    .contact-link-value { font-size: 15px; font-weight: 400; }
+    .contact-link-arrow { font-size: 18px; color: var(--muted); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 20px; }
+    .form-title {
+      font-family: var(--font-display); font-size: 28px; letter-spacing: 2px;
+      color: var(--white); margin-bottom: 4px;
+    }
+    .form-subtitle { font-size: 13px; color: var(--muted); margin-bottom: 8px; line-height: 1.6; }
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
+    .field input, .field textarea, .field select {
+      background: #141414; border: 1px solid #222;
+      color: var(--white); font-family: var(--font-body);
+      font-size: 16px; font-weight: 300; padding: 16px;
+      outline: none; border-radius: 0;
+      -webkit-appearance: none; appearance: none;
+      transition: border-color 0.2s;
+    }
+    .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); }
+    .field textarea { min-height: 110px; resize: vertical; }
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6560' stroke-width='1.5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px;
+      background-color: #141414;
+    }
+    .field select option { background: #141414; }
+    .submit-btn {
+      background: var(--accent); color: var(--black); border: none; padding: 20px;
+      font-family: var(--font-body); font-size: 11px; font-weight: 500;
+      letter-spacing: 3px; text-transform: uppercase; width: 100%; cursor: pointer;
+      -webkit-tap-highlight-color: transparent; transition: background 0.2s;
+    }
+    .submit-btn:active { background: var(--accent2); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0e0e0e; padding: 36px 20px calc(36px + var(--safe-bottom));
+      border-top: 1px solid #1a1a1a;
+    }
+    .footer-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 32px;
+    }
+    .footer-name {
+      font-family: var(--font-display); font-size: 22px; letter-spacing: 3px; line-height: 1.1;
+    }
+    .footer-name span { color: var(--accent); display: block; }
+    .footer-links { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
+    .footer-links a {
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; padding: 4px 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 24px; border-top: 1px solid #1a1a1a;
+    }
+    .footer-copy { font-size: 10px; color: #3a3a3a; letter-spacing: 1px; }
+    .footer-handle { font-size: 10px; letter-spacing: 2px; color: var(--accent); text-decoration: none; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── DESKTOP ── */
+    @media (min-width: 768px) {
+      body { cursor: none; }
+      .cursor, .cursor-ring { display: block; }
+      nav { padding: 28px 56px; }
+      .hamburger { display: none; }
+      .nav-links { display: flex; gap: 40px; list-style: none; }
+      .nav-links a {
+        color: var(--white); text-decoration: none; font-size: 11px;
+        letter-spacing: 3px; text-transform: uppercase; opacity: 0.6; transition: opacity 0.2s;
+      }
+      .nav-links a:hover { opacity: 1; }
+      .nav-logo-first, .nav-logo-last { font-size: 16px; }
+      .hero { padding: 0 56px 88px; }
+      .hero-cta { flex-direction: row; align-items: center; gap: 16px; }
+      .btn-primary, .btn-outline { display: inline-block; text-align: left; padding: 16px 36px; }
+      section { padding: 104px 56px; }
+      .video-reel { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+      .video-card:nth-child(1) { grid-column: span 2; }
+      .video-card:nth-child(5) { grid-column: span 2; }
+      #about { display: grid; grid-template-columns: 5fr 7fr; gap: 80px; align-items: start; }
+      .about-visual { margin-bottom: 0; }
+      #contact { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+      .contact-info { margin-bottom: 0; }
+      .submit-btn { width: auto; padding: 18px 48px; }
+      footer { padding: 40px 56px calc(40px + var(--safe-bottom)); }
+      .footer-links { flex-direction: row; gap: 32px; align-items: center; }
+    }
+
+    .cursor {
+      display: none; width: 10px; height: 10px; background: var(--accent);
+      border-radius: 50%; position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999; mix-blend-mode: difference;
+    }
+    .cursor-ring {
+      display: none; width: 34px; height: 34px; border: 1px solid var(--accent);
+      border-radius: 50%; position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9998; transition: transform 0.4s ease; opacity: 0.45;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#portfolio" onclick="closeMenu()">Work</a>
+    <a href="#about" onclick="closeMenu()">About</a>
+    <a href="#contact" onclick="closeMenu()">Contact</a>
+    <div class="mobile-menu-footer">
+      <span class="mobile-menu-handle">@shivtej.lens</span>
+      <span class="mobile-menu-label">Videographer</span>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <span class="nav-logo-first">SHIVTEJ</span>
+      <span class="nav-logo-last">THENAYI</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#portfolio">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grain"></div>
+    <div class="hero-line-v"></div>
+    <div class="hero-scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+
+    <p class="hero-eyebrow">Videographer &amp; Creative Editor</p>
+    <h1 class="hero-name">
+      <span class="first">SHIVTEJ</span>
+      <span class="last">THENAYI</span>
+    </h1>
+    <div class="hero-role">
+      <p class="hero-role-text">
+        <em>Cafes &amp; Restaurants</em> — Short-form Video Ads
+      </p>
+    </div>
+    <p class="hero-sub">
+      I shoot and edit cinematic video ads that make cafes and restaurants impossible to scroll past. Every frame tells a story. Every cut earns the craving.
+    </p>
+    <div class="hero-cta">
+      <a href="#portfolio" class="btn-primary">Watch My Work</a>
+      <a href="#contact" class="btn-outline">Work With Me</a>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">SHIVTEJ THENAYI ✦</span>
+      <span class="marquee-item">VIDEOGRAPHER ✦</span>
+      <span class="marquee-item">CREATIVE EDITOR ✦</span>
+      <span class="marquee-item">CAFE &amp; RESTAURANT ADS ✦</span>
+      <span class="marquee-item">SHORT-FORM CONTENT ✦</span>
+      <span class="marquee-item">CINEMATIC REELS ✦</span>
+      <span class="marquee-item">SHIVTEJ THENAYI ✦</span>
+      <span class="marquee-item">VIDEOGRAPHER ✦</span>
+      <span class="marquee-item">CREATIVE EDITOR ✦</span>
+      <span class="marquee-item">CAFE &amp; RESTAURANT ADS ✦</span>
+      <span class="marquee-item">SHORT-FORM CONTENT ✦</span>
+      <span class="marquee-item">CINEMATIC REELS ✦</span>
+    </div>
+  </div>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="portfolio-header reveal">
+      <div>
+        <p class="section-label">Selected Work</p>
+        <h2 class="section-title">MY<br>VIDEOS</h2>
+      </div>
+      <div class="portfolio-count">07</div>
+    </div>
+    <div class="video-reel">
+
+      <div class="video-card reveal">
+        <video src="videos/video1.mp4" loop muted playsinline preload="none" poster="posters/poster1.jpg"></video>
+        <div class="video-info">
+          <div>
+            <p class="video-num">01</p>
+            <p class="video-client">Café Noir</p>
+            <p class="video-title">MORNING RITUALS</p>
+          </div>
+          <div class="video-tap-btn">
+            <div class="play-icon"></div>
+            <div class="pause-icon"><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card reveal">
+        <video src="videos/video2.mp4" loop muted playsinline preload="none" poster="posters/poster2.jpg"></video>
+        <div class="video-info">
+          <div>
+            <p class="video-num">02</p>
+            <p class="video-client">Ember Kitchen</p>
+            <p class="video-title">FIRE &amp; FLAVOR</p>
+          </div>
+          <div class="video-tap-btn">
+            <div class="play-icon"></div>
+            <div class="pause-icon"><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card reveal">
+        <video src="videos/video3.mp4" loop muted playsinline preload="none" poster="posters/poster3.jpg"></video>
+        <div class="video-info">
+          <div>
+            <p class="video-num">03</p>
+            <p class="video-client">Bloom Brunch</p>
+            <p class="video-title">SUNDAY SLOW</p>
+          </div>
+          <div class="video-tap-btn">
+            <div class="play-icon"></div>
+            <div class="pause-icon"><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card reveal">
+        <video src="videos/video4.mp4" loop muted playsinline preload="none" poster="posters/poster4.jpg"></video>
+        <div class="video-info">
+          <div>
+            <p class="video-num">04</p>
+            <p class="video-client">Dusk Bistro</p>
+            <p class="video-title">AFTER DARK</p>
+          </div>
+          <div class="video-tap-btn">
+            <div class="play-icon"></div>
+            <div class="pause-icon"><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card reveal">
+        <video src="videos/video5.mp4" loop muted playsinline preload="none" poster="posters/poster5.jpg"></video>
+        <div class="video-info">
+          <div>
+            <p class="video-num">05</p>
+            <p class="video-client">The Press Room</p>
+            <p class="video-title">COLD BREW STORY</p>
+          </div>
+          <div class="video-tap-btn">
+            <div class="play-icon"></div>
+            <div class="pause-icon"><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card reveal">
+        <video src="videos/video6.mp4" loop muted playsinline preload="none" poster="posters/poster6.jpg"></video>
+        <div class="video-info">
+          <div>
+            <p class="video-num">06</p>
+            <p class="video-client">Salt &amp; Stone</p>
+            <p class="video-title">CRAFT ELEVATED</p>
+          </div>
+          <div class="video-tap-btn">
+            <div class="play-icon"></div>
+            <div class="pause-icon"><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card reveal">
+        <video src="videos/video7.mp4" loop muted playsinline preload="none" poster="posters/poster7.jpg"></video>
+        <div class="video-info">
+          <div>
+            <p class="video-num">07</p>
+            <p class="video-client">Velvet Cup</p>
+            <p class="video-title">THE POUR</p>
+          </div>
+          <div class="video-tap-btn">
+            <div class="play-icon"></div>
+            <div class="pause-icon"><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-visual reveal">
+      <div class="about-frame-deco"></div>
+      <div class="about-img-wrap">
+        <!-- Replace with: <img src="images/shivtej.jpg" alt="Shivtej Thenayi" style="width:100%;height:100%;object-fit:cover;display:block;"> -->
+        <div class="about-img-placeholder">ADD YOUR<br>PHOTO HERE<br><br>images/shivtej.jpg</div>
+      </div>
+      <div class="about-tag">SHIVTEJ.LENS</div>
+    </div>
+
+    <div class="about-content reveal">
+      <p class="section-label">About Shivtej</p>
+      <h2 class="section-title">I MAKE<br>FOOD LOOK<br>IRRESISTIBLE</h2>
+      <p class="about-intro">Hi, I'm Shivtej — a videographer and creative editor with a passion for food, storytelling, and the art of the perfect cut.</p>
+      <p class="about-bio">I specialise in short-form video ads for cafes and restaurants. My work isn't just about filming food — it's about capturing the atmosphere, the warmth, and the craving that makes someone put down their phone and walk through your door.</p>
+      <p class="about-bio">From the first sip of morning coffee to the last bite of a late-night dessert, I tell your brand's story through cinematic visuals and precise, rhythmic editing that's built for social media and built to convert.</p>
+      <div class="about-skills">
+        <span class="skill-tag">Videography</span>
+        <span class="skill-tag">Creative Editing</span>
+        <span class="skill-tag">Color Grading</span>
+        <span class="skill-tag">Reels &amp; Shorts</span>
+        <span class="skill-tag">Food Cinematography</span>
+        <span class="skill-tag">Sound Design</span>
+      </div>
+      <div class="about-stats">
+        <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Brands</div></div>
+        <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Videos</div></div>
+        <div class="stat"><div class="stat-num">10M+</div><div class="stat-label">Views</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-info reveal">
+      <p class="section-label">Let's Work Together</p>
+      <h2 class="section-title">GOT A<br>PROJECT<br>IN MIND?</h2>
+      <p class="contact-tagline">"If your food is good, the world deserves to see it. Let me show them."</p>
+      <div class="contact-links">
+        <a href="mailto:hello@shivtejthenayi.com" class="contact-link-row">
+          <div>
+            <div class="contact-link-label">Email</div>
+            <div class="contact-link-value">hello@shivtejthenayi.com</div>
+          </div>
+          <span class="contact-link-arrow">↗</span>
+        </a>
+        <a href="https://instagram.com/shivtej.lens" target="_blank" rel="noopener" class="contact-link-row">
+          <div>
+            <div class="contact-link-label">Instagram</div>
+            <div class="contact-link-value">@shivtej.lens</div>
+          </div>
+          <span class="contact-link-arrow">↗</span>
+        </a>
+        <div class="contact-link-row" style="cursor:default;">
+          <div>
+            <div class="contact-link-label">Available For</div>
+            <div class="contact-link-value">Cafes, Restaurants &amp; Food Brands</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal">
+      <p class="form-title">SEND A MESSAGE</p>
+      <p class="form-subtitle">Tell me about your place and what you're looking for. I'll get back to you within 24 hours.</p>
+      <div class="field">
+        <label>Your Name</label>
+        <input type="text" inputmode="text" autocomplete="name" placeholder="Your name" />
+      </div>
+      <div class="field">
+        <label>Email or Instagram</label>
+        <input type="text" inputmode="email" autocomplete="email" placeholder="email or @handle" />
+      </div>
+      <div class="field">
+        <label>Your Cafe / Restaurant</label>
+        <input type="text" placeholder="Business name" />
+      </div>
+      <div class="field">
+        <label>What Do You Need?</label>
+        <select>
+          <option value="">Select a service</option>
+          <option>Single Reel / Short Ad</option>
+          <option>Monthly Content Package</option>
+          <option>Brand Launch Campaign</option>
+          <option>Menu Highlight Series</option>
+          <option>Grand Opening Coverage</option>
+          <option>Just want to talk first</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Tell Me More</label>
+        <textarea inputmode="text" placeholder="What's the vibe of your place? Any upcoming launches, events, or goals?"></textarea>
+      </div>
+      <button class="submit-btn" id="submitBtn" onclick="handleSubmit(event)">Send to Shivtej →</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-name">
+        SHIVTEJ<span>THENAYI</span>
+      </div>
+      <div class="footer-links">
+        <a href="#portfolio">Work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Shivtej Thenayi. All rights reserved.</span>
+      <a href="https://instagram.com/shivtej.lens" target="_blank" rel="noopener" class="footer-handle">@shivtej.lens</a>
+    </div>
+  </footer>
+
+  <script>
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    function toggleMenu() {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    }
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Touch = tap-to-play; mouse = hover-to-play
+    const isTouch = () => !window.matchMedia('(hover: hover)').matches;
+    let currentlyPlaying = null;
+
+    document.querySelectorAll('.video-card').forEach(card => {
+      const video = card.querySelector('video');
+
+      card.addEventListener('click', () => {
+        if (!isTouch()) return;
+        if (video.paused) {
+          if (currentlyPlaying && currentlyPlaying !== video) {
+            currentlyPlaying.pause();
+            currentlyPlaying.currentTime = 0;
+            currentlyPlaying.closest('.video-card').classList.remove('playing');
+          }
+          video.play().catch(() => {});
+          card.classList.add('playing');
+          currentlyPlaying = video;
+        } else {
+          video.pause(); video.currentTime = 0;
+          card.classList.remove('playing');
+          currentlyPlaying = null;
+        }
+      });
+
+      card.addEventListener('mouseenter', () => { if (!isTouch()) video.play().catch(() => {}); });
+      card.addEventListener('mouseleave', () => {
+        if (!isTouch()) { video.pause(); video.currentTime = 0; card.classList.remove('playing'); }
+      });
+    });
+
+    // Pause off-screen videos (battery saving)
+    document.querySelectorAll('.video-card').forEach(card => {
+      new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) {
+            const v = entry.target.querySelector('video');
+            if (v && !v.paused) {
+              v.pause(); entry.target.classList.remove('playing');
+              if (currentlyPlaying === v) currentlyPlaying = null;
+            }
+          }
+        });
+      }, { threshold: 0.05 }).observe(card);
+    });
+
+    // Scroll reveal
+    document.querySelectorAll('.reveal').forEach(el => {
+      new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+      }, { threshold: 0.07 }).observe(el);
+    });
+
+    // Desktop cursor
+    if (window.matchMedia('(hover: hover)').matches) {
+      const cursor = document.getElementById('cursor');
+      const ring = document.getElementById('cursorRing');
+      cursor.style.display = 'block'; ring.style.display = 'block';
+      let mx = 0, my = 0, rx = 0, ry = 0;
+      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+      (function tick() {
+        cursor.style.transform = `translate(${mx-5}px,${my-5}px)`;
+        rx += (mx-rx)*0.12; ry += (my-ry)*0.12;
+        ring.style.transform = `translate(${rx-17}px,${ry-17}px)`;
+        requestAnimationFrame(tick);
+      })();
+    }
+
+    // Contact submit
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.textContent = 'Message Sent ✓';
+      btn.style.background = '#2e6e2e'; btn.style.color = '#fff';
+      setTimeout(() => {
+        btn.textContent = 'Send to Shivtej →';
+        btn.style.background = ''; btn.style.color = '';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
